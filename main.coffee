@@ -6,9 +6,13 @@ init = ->
 
   stage = new createjs.Stage 'myCanvas'
   createjs.Touch.enable stage
+  row = 4
+  col = 4
   newGame = (event) ->
-    game = new Game canvas.width, canvas.height, stage, 6, 6, Math.floor(Math.random() * 2)
+    game = new Game canvas.width, canvas.height, stage, row, col, Math.floor(Math.random() * 2)
     game.subscribe.on 'gameEnd', newGame
+    row += 2
+    col += 2
   newGame()
 
   createjs.Ticker.on 'tick', () ->
@@ -22,15 +26,16 @@ class Game
     for i in [255, 100]
       for j in [255, 100]
         for k in [255, 100]
-          pColors.push [i, j, k]
+          pColors.push [i, j, k] unless i == 255 and j == 255 and k == 255
     selectedC = pColors[Math.floor(Math.random() * pColors.length)]
     console.log c
     @types = 5
     @colors = []
     for i in [0...@types]
-      c = ((j + Math.random() * 200) for j in selectedC)
+      c = ((j * 100 / 255 + Math.random() * 55 +  i / @types * 100) for j in selectedC)
       max = Math.max c[0], c[1], c[2]
-      c = (Math.floor(j / max * 255) for j in c)
+      c = (Math.floor(j / max * 255) - 50 for j in c)
+      c = pColors[i]
       console.log c
       @colors.push "rgba(#{c[0]}, #{c[1]}, #{c[2]}, 1)"
 
@@ -174,6 +179,7 @@ class Block
       x = (Math.random() - 0.5) * 20 * @width
       y = (Math.random() - 0.5) * 20 * @height
       createjs.Tween.get(@block).set({alpha: 0.1}).to({alpha: 0, x: x, y: y, skewX: skewX, skewY: skewY}, 5000)
+
     else
       x = @block.x
       y = @block.y
@@ -182,7 +188,8 @@ class Block
       createjs.Tween.get(@block, {override: true})
           .set({alpha: 0.1})
           .to({alpha: 0, x: x - scale * @width, y: y - scale * @height, scaleX: 2 * scale, scaleY: 2 * scale}, 5000)
-    @stage.setChildIndex @block, 1
+
+    @stage.setChildIndex @block, 0
     setTimeout (() => @stage.removeChild @block), 5000
 
 window.init = init
