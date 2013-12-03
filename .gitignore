@@ -1,2 +1,2 @@
-main.js
-main.map
+src/*.js
+obj/
