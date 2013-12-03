@@ -16,8 +16,6 @@ init = ->
 
   logic = new Logic map, 5
   render = new RenderInputer logic.map, height, width, 0, stage
-  # render.subscribe.on 'select', (data) ->
-  #   logic.emit 'select', data
 
   utils.flow logic, render, ["selectClear", "select"]
   utils.flow render, logic, ['select']
