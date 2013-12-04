@@ -27,8 +27,9 @@ class Logic extends EventEmitter
       if path?
         @map[@selected[0][0]][@selected[0][1]] = 0
         @map[@selected[1][0]][@selected[1][1]] = 0
+        @blockNum -= 2
+        @subscribe.emit 'gameEnd' if @blockNum <= 0
       @subscribe.emit 'selectClear', {path: path, selected: @selected}
-      @subscribe.emit 'gameEnd'
       @selected = []
 
   check: () =>

@@ -1,5 +1,5 @@
 class RenderInputer extends EventEmitter
-  constructor: (map, @height, @width, @effect, @stage) ->
+  constructor: (map, @width, @height, @effect, @stage) ->
     @subscribe = new EventEmitter()
     @row = map.length
     @col = map[0].length
@@ -9,8 +9,8 @@ class RenderInputer extends EventEmitter
       for j in [255, 100]
         for k in [255, 100]
           colors.push "rgba(#{i}, #{j}, #{k}, 1)" unless i == 255 and j == 255 and k == 255
-    @perWidth = @width / @row
-    @perHeight =  @height / @col
+    @perWidth = @width / @col
+    @perHeight =  @height / @row
     @blocks = for i in [0 ... @row]
       for j in [0 ... @col]
         if i == 0 or j == 0 or i == @row-1 or j == @col-1
