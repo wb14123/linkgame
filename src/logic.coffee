@@ -14,14 +14,12 @@ class Logic extends EventEmitter
 
     @subscribe = new EventEmitter()
     @on 'select', (data) =>
-      console.log data
       @select data.x, data.y
     @subscribe.emit 'completed'
 
   select: (x, y) =>
     @selected.push [x, y]
     @subscribe.emit 'select', {x: x, y: y}
-    console.log @selected
     if @selected.length == 2
       path = @check()
       if path?

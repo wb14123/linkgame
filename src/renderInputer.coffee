@@ -30,7 +30,6 @@ class RenderInputer extends EventEmitter
           createjs.Tween.get(block).wait(i + j).to({alpha: 1}, 700)
           do (i, j) =>
             block.on 'mousedown', () =>
-              console.log [i, j]
               @subscribe.emit 'select', {x: i, y: j}
           block
     @stage.update()
@@ -57,7 +56,6 @@ class RenderInputer extends EventEmitter
     setTimeout (() => @stage.removeChild line), 500
 
   select: (x, y) =>
-    console.log [x, y]
     block = @blocks[x][y]
     if block.down
       block.scaleX= 1
