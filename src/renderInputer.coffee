@@ -58,7 +58,6 @@ class RenderInputer extends EventEmitter
 
   select: (x, y) =>
     console.log [x, y]
-    createjs.Sound.play "#{41 + @blocks[x][y].type}a"
     block = @blocks[x][y]
     if block.down
       block.scaleX= 1
@@ -70,6 +69,8 @@ class RenderInputer extends EventEmitter
     @stage.update()
 
   removeBlock: (i, j) =>
+    createjs.Sound.play "#{41 + @blocks[i][j].type}a"
+
     block = @blocks[i][j]
     block.removeAllEventListeners()
 
