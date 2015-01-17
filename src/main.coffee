@@ -8,7 +8,13 @@ window.init = ->
   createjs.Ticker.on 'tick', () ->
     stage.update()
   newGame stage, 4, 4, width, height
+  loadSounds()
 
+
+loadSounds = ->
+  for i in [41..47]
+    for j in ['a', "b"]
+      createjs.Sound.registerSound("/sound/#{i}#{j}.mp3", "#{i}#{j}")
 
 newGame = (stage, row, col, width, height) ->
   map = for i in [0..row + 1]
